@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------
-//  EmptyClass_9Lines.m
+//  EmptyClass_9Lines.h
 //  ObjectiveCritic
 //
 //  Created by Egor Chiglintsev on December 22, 2013.

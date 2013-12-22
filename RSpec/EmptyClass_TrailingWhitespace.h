@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------
-//  EmptyClass_TrailingWhitespace.m
+//  EmptyClass_TrailingWhitespace.h
 //  ObjectiveCritic
 //
 //  Created by Egor Chiglintsev on December 22, 2013.
