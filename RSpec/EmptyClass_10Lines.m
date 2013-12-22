@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------------
-#  EmptyClass_9Lines.m
+#  EmptyClass_10Lines.m
 #  ObjectiveCritic
 #
 #  Created by Egor Chiglintsev on December 22, 2013.
