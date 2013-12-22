@@ -21,7 +21,7 @@ describe OCritic::Processor do
 
       files_in  = ['file1', 'file2', 'file3']
       processor =  OCritic::Processor.new(*files_in)
-      processor.should_receive(:process_files).with(files_in).at_least(:once)
+      processor.should_receive(:process_files).with(files_in).at_most(:once)
       processor.run
     end
   end
