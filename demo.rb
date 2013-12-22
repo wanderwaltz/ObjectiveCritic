@@ -11,6 +11,6 @@ $: << "./" # Add current directory to the search path
 
 require 'ocritic'
 
-proc = OCritic::Processor.new('RSpec/EmptyClass_10Lines.m')
+proc = OCritic::Processor.new('RSpec/EmptyClass_TrailingWhitespace.m')
 
 proc.run
