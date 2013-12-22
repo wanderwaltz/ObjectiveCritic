@@ -46,7 +46,7 @@ describe OCritic::Processor do
   describe '#process_file' do
     it 'should pass the file with the given name to #process_IO' do
 
-      processor = OCritic::Processor.new('EmptyClass_9Lines.m')
+      processor = OCritic::Processor.new('EmptyClass_9Lines.h')
       processor.should_receive(:process_IO).with(anything(), kind_of(File)).at_most(:once)
       processor.stub(:print_stats) # we don't care about the stats, so stub this method out
       processor.run
