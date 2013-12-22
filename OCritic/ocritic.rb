@@ -8,4 +8,5 @@
 require_relative 'OCritic/processor'
 
 # line statistics
-require_relative 'OCritic/lines_count'
+require_relative 'OCritic/lines_count'                # total number of lines in a file
+require_relative 'OCritic/lines_count_exc_whitespace' # number of lines excluding whitespace-only lines

@@ -73,7 +73,7 @@ module OCritic
         puts filename
 
         stats.each do |key, statistic|
-          puts "  #{statistic.class.pretty_name}: #{statistic.value}"
+          puts "  #{statistic.class.pretty_name}: #{statistic.to_s}"
         end
       
         puts ''

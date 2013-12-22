@@ -6,6 +6,7 @@
 #  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 #--------------------------------------------------------------------------
 require_relative 'line_statistic'
+require 'ostruct'
 
 module OCritic
   module LineStats
@@ -21,15 +22,20 @@ module OCritic
       end
 
       def initialize
-        @count = 0
+        @value             = OpenStruct.new
+        @value.count       = 0
+        @value.count_total = 0
       end
 
       def process_line(string)
-        @count += 1
+        @value.count_total += 1
+        @value.count       += 1 unless string.strip.length == 0
       end
 
-      def value
-        @count
+      attr_accessor :value
+
+      def to_s
+        "#{@value.count} (#{@value.count_total} if including whitespace-only lines)"
       end
     end
 
