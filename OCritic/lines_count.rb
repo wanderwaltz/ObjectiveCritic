@@ -1,5 +1,5 @@
 #--------------------------------------------------------------------------
-#  line_statistic.rb
+#  lines_count.rb
 #  ObjectiveCritic
 #
 #  Created by Egor Chiglintsev on December 22, 2013.
