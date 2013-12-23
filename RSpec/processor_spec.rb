@@ -20,7 +20,7 @@ describe OCritic::Processor do
     it 'should call #process_files when #run is invoked' do
       files_in  = ['file1', 'file2', 'file3']
       processor =  OCritic::Processor.new(*files_in)
-      processor.should_receive(:process_files).with(files_in).at_least(:once)
+      processor.should_receive(:process_files).with(files_in).exactly(:once)
       processor.run
     end
   end
@@ -47,7 +47,7 @@ describe OCritic::Processor do
   describe '#process_file' do
     it 'should pass the file object to #process_IO' do
       processor = OCritic::Processor.new
-      processor.should_receive(:process_IO).with(anything(), kind_of(File)).at_most(:once)
+      processor.should_receive(:process_IO).with(anything(), kind_of(File)).exactly(:once)
       processor.process_file('EmptyClass_9Lines.h')
     end
 
@@ -55,7 +55,7 @@ describe OCritic::Processor do
     it 'should pass the file info object to #process_IO' do
       processor = OCritic::Processor.new
       processor.should_receive(:process_IO).with(kind_of(OCritic::FileInfo),
-                                                 kind_of(File)).at_most(:once)
+                                                 kind_of(File)).exactly(:once)
       processor.process_file('EmptyClass_9Lines.h')
     end
 
@@ -78,7 +78,7 @@ describe OCritic::Processor do
 
     describe '#process_IO' do
       it 'should pass the IO object to #process_lines' do
-        @processor.should_receive(:process_lines).with(:info, :io).at_most(:once)
+        @processor.should_receive(:process_lines).with(:info, :io).exactly(:once)
         @processor.process_IO(:info, :io)
       end
     end
@@ -88,7 +88,7 @@ describe OCritic::Processor do
       it 'should call #process_line for each line of the file' do
         @processor.should_receive(:process_line).with(:info, 
                                                       kind_of(Fixnum), #line number
-                                                      anything()).at_most(3).times
+                                                      kind_of(String)).exactly(3).times
         @processor.process_lines(:info, "line 1
                                          line 2
                                          line 3")
@@ -102,11 +102,11 @@ describe OCritic::Processor do
 
         file_info.all_lines.count.should be == 1
 
-        line = file_info.all_lines.last
+        line = file_info.all_lines[0]
 
-        line.text.should be == 'line'
-        line.filename.should be == 'name'
-        line.index.should be == 1
+        line.text.     should be == 'line'
+        line.filename. should be == 'name'
+        line.index.    should be == 1
       end
     end
   end
