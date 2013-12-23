@@ -32,7 +32,7 @@ module OCritic
         @value.count       += 1 unless string.strip.length == 0
       end
 
-      attr_accessor :value
+      attr_reader :value
 
       def to_s
         "#{@value.count} (#{@value.count_total} if including whitespace-only lines)"
