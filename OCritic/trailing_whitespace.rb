@@ -29,7 +29,9 @@ module OCritic
         @count += 1 if string.rstrip.length+1 < string.length
       end
 
-      attr_accessor :value
+      def value
+        @count
+      end
 
       def to_s
         @count.to_s
