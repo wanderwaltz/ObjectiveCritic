@@ -46,4 +46,29 @@ describe OCritic::LineStats::TrailingWhitespace do
     end
   end
 
+
+  describe '#lines' do
+    it 'will contain lines with trailing whitespace' do
+      @stat.process_line('trailing whitespace   ')
+      @stat.lines.should be == ['trailing whitespace   ']
+    end
+
+
+    it 'will contain whitespace-only lines' do
+      @stat.process_line('   ')
+      @stat.lines.should be == ['   ']
+    end
+
+
+    it 'will not contain lines with leading whitespace' do
+      @stat.process_line('   leading whitespace')
+      @stat.lines.should be == []
+    end
+
+
+    it 'will not contain lines without whitespace' do
+      @stat.process_line('no whitespace')
+      @stat.lines.should be == []
+    end
+  end
 end

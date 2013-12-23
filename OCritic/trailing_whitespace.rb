@@ -13,6 +13,8 @@ module OCritic
 
     class TrailingWhitespace < LineStatistic
 
+      attr_reader :lines
+
       def self.pretty_name
         "Lines with trailing whitespace"
       end
@@ -22,20 +24,16 @@ module OCritic
       end
 
       def initialize
-        @count = 0
+        @lines = []
       end
 
       def process_line(line)
-        text    = line.to_s
-        @count += 1 if text.rstrip.length+1 < text.length
+        text = line.to_s
+        @lines << line if text.rstrip.length+1 < text.length
       end
 
       def value
-        @count
-      end
-
-      def to_s
-        @count.to_s
+        @lines.count
       end
     end
 
