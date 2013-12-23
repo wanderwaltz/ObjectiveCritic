@@ -43,11 +43,33 @@ describe OCritic::Processor do
     end
   end
 
+
   describe '#process_file' do
     it 'should pass the file with the given name to #process_IO' do
-
       processor = OCritic::Processor.new('EmptyClass_9Lines.h')
       processor.should_receive(:process_IO).with(anything(), kind_of(File)).at_most(:once)
+      processor.stub(:print_stats) # we don't care about the stats, so stub this method out
+      processor.run
+    end
+  end
+
+
+  describe '#process_IO' do
+    it 'should pass the IO object to #process_lines' do
+      processor = OCritic::Processor.new('EmptyClass_9Lines.h')
+      processor.should_receive(:process_lines).with(anything(), kind_of(IO)).at_most(:once)
+      processor.stub(:print_stats) # we don't care about the stats, so stub this method out
+      processor.run
+    end
+  end
+
+
+  describe '#process_line' do
+    it 'should be called for each line of the file' do
+      processor = OCritic::Processor.new('EmptyClass_9Lines.h')
+      processor.should_receive(:process_line).with(anything(), 
+                                                   kind_of(Fixnum), #line number
+                                                   anything()).at_most(9).times
       processor.stub(:print_stats) # we don't care about the stats, so stub this method out
       processor.run
     end

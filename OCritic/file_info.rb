@@ -12,10 +12,12 @@ module OCritic
   class FileInfo
     attr_reader :filename
     attr_reader :line_stats
+    attr_reader :all_lines
 
     def initialize(filename)
       @filename   = filename.dup
       @line_stats = make_line_stats
+      @all_lines  = []
     end
 
     private

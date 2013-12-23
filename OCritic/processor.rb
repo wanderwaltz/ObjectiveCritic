@@ -44,6 +44,11 @@ module OCritic
 
 
     def process_IO(file_info, io)
+      process_lines(file_info, io)
+    end
+
+
+    def process_lines(file_info, io)
       index = 0
       io.each_line do |string|
         index += 1
@@ -53,7 +58,7 @@ module OCritic
 
 
     def process_line(file_info, index, string)
-      line_info = LineInfo.new(file_info.filename, index, string)
+      file_info.all_lines << line_info = LineInfo.new(file_info.filename, index, string)
 
       file_info.line_stats.each do |key, statistic|
         statistic.process_line(line_info)
