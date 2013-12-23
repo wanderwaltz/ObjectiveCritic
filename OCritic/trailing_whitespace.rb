@@ -25,8 +25,9 @@ module OCritic
         @count = 0
       end
 
-      def process_line(string)
-        @count += 1 if string.rstrip.length+1 < string.length
+      def process_line(line)
+        text    = line.to_s
+        @count += 1 if text.rstrip.length+1 < text.length
       end
 
       def value

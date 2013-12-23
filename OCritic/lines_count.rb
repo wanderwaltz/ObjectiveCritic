@@ -27,9 +27,9 @@ module OCritic
         @value.count_total = 0
       end
 
-      def process_line(string)
+      def process_line(line)
         @value.count_total += 1
-        @value.count       += 1 unless string.strip.length == 0
+        @value.count       += 1 unless line.to_s.strip.length == 0
       end
 
       attr_reader :value
