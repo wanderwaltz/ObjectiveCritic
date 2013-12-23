@@ -17,6 +17,7 @@ describe OCritic::LineStats::TrailingWhitespace do
   describe '#new' do
     it 'will be initialized with zero lines count' do
       @stat.value.should be == 0
+      @stat.lines.count.should be == 0
     end
   end
 
