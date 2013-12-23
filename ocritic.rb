@@ -10,3 +10,4 @@ require_relative 'OCritic/processor'
 # line statistics
 require_relative 'OCritic/lines_count'
 require_relative 'OCritic/trailing_whitespace'
+require_relative 'OCritic/line_length'

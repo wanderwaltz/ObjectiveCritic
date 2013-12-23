@@ -5,15 +5,16 @@
 #  Created by Egor Chiglintsev on December 22, 2013.
 #  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 #--------------------------------------------------------------------------
-require_relative 'line_statistic'
+require_relative 'file_info'
+require_relative 'line_info'
 
 module OCritic
 
   class Processor
 
     def initialize(*filenames)
-      @filenames       = filenames
-      @file_statistics = {}
+      @filenames = filenames
+      @file_info = {}
     end
 
 
@@ -24,66 +25,58 @@ module OCritic
 
 
     def process_files(filenames)
-      filenames.each do |file| 
-        process_file(file) 
+      filenames.each do |file|
+        process_file(file)
       end
     end
 
 
     def process_file(filename)
 
-      stats = make_empty_stats     
+      info = FileInfo.new(filename)
 
-      @file_statistics[filename] = stats
+      @file_info[filename] = info
 
       File.open(filename, "r") do |file|
-        process_IO(stats, file)
-      end    
-    end
-
-
-    def make_empty_stats
-      stats = {}
-
-      LineStatistic.all_statistics.each do |klass|
-
-        unless stats[klass.symbol] == nil 
-          raise "Conflicting line statistic access symbol :#{klass.symbol} for classes: "\
-                "#{klass.name} and #{stats[klass.symbol].class.name}!" 
-        end
-
-        stats[klass.symbol] = klass.new
+        process_IO(info, file)
       end
-
-      stats
     end
 
 
-    def process_IO(stats, io)
+    def process_IO(file_info, io)
+      process_lines(file_info, io)
+    end
+
+
+    def process_lines(file_info, io)
+      index = 0
       io.each_line do |string|
-        process_line(stats, string)
+        index += 1
+        process_line(file_info, index, string)
       end
     end
 
 
-    def process_line(stats, string)
-      stats.each do |key, statistic|
-        statistic.process_line(string)
+    def process_line(file_info, index, string)
+      file_info.all_lines << line_info = LineInfo.new(file_info.filename, index, string)
+
+      file_info.line_stats.each do |key, statistic|
+        statistic.process_line(line_info)
       end
     end
 
 
     def print_stats
-      @file_statistics.each do |filename, stats|
+      @file_info.each do |filename, info|
 
         puts filename
 
-        stats.each do |key, statistic|
+        info.line_stats.each do |key, statistic|
           puts "  #{statistic.class.pretty_name}: #{statistic.to_s}"
         end
-      
+
         puts ''
-      end   
+      end
     end
 
   end

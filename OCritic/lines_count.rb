@@ -27,12 +27,12 @@ module OCritic
         @value.count_total = 0
       end
 
-      def process_line(string)
+      def process_line(line)
         @value.count_total += 1
-        @value.count       += 1 unless string.strip.length == 0
+        @value.count       += 1 unless line.to_s.strip.length == 0
       end
 
-      attr_accessor :value
+      attr_reader :value
 
       def to_s
         "#{@value.count} (#{@value.count_total} if including whitespace-only lines)"
