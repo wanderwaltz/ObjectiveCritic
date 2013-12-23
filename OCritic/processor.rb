@@ -25,8 +25,8 @@ module OCritic
 
 
     def process_files(filenames)
-      filenames.each do |file| 
-        process_file(file) 
+      filenames.each do |file|
+        process_file(file)
       end
     end
 
@@ -39,7 +39,7 @@ module OCritic
 
       File.open(filename, "r") do |file|
         process_IO(info, file)
-      end    
+      end
     end
 
 
@@ -74,9 +74,9 @@ module OCritic
         info.line_stats.each do |key, statistic|
           puts "  #{statistic.class.pretty_name}: #{statistic.to_s}"
         end
-      
+
         puts ''
-      end   
+      end
     end
 
   end

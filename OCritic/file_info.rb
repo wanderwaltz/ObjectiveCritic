@@ -27,9 +27,9 @@ module OCritic
 
       LineStatistic.all_statistics.each do |klass|
 
-        unless stats[klass.symbol] == nil 
+        unless stats[klass.symbol] == nil
           raise "Conflicting line statistic access symbol :#{klass.symbol} for classes: "\
-                "#{klass.name} and #{stats[klass.symbol].class.name}!" 
+                "#{klass.name} and #{stats[klass.symbol].class.name}!"
         end
 
         stats[klass.symbol] = klass.new

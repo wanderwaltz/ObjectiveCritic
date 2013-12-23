@@ -33,7 +33,7 @@ describe OCritic::Processor do
       processor = OCritic::Processor.new(*files_in)
       files_out = []
 
-      processor.stub(:process_file) do |filename| 
+      processor.stub(:process_file) do |filename|
         files_out << filename
       end
 
@@ -86,7 +86,7 @@ describe OCritic::Processor do
 
     describe '#process_lines' do
       it 'should call #process_line for each line of the file' do
-        @processor.should_receive(:process_line).with(:info, 
+        @processor.should_receive(:process_line).with(:info,
                                                       kind_of(Fixnum), #line number
                                                       kind_of(String)).exactly(3).times
         @processor.process_lines(:info, "line 1
@@ -110,5 +110,5 @@ describe OCritic::Processor do
       end
     end
   end
-  
+
 end

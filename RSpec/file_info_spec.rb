@@ -8,7 +8,7 @@
 require "../ocritic"
 
 describe OCritic::FileInfo do
-  
+
   describe '#new' do
     it 'should create a new FileInfo object' do
       OCritic::FileInfo.new('name').should be_true

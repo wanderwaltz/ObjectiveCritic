@@ -8,7 +8,7 @@
 require "../ocritic"
 
 describe OCritic::LineInfo do
-  
+
   describe '#new' do
     it 'should create a new LineInfo object' do
       OCritic::LineInfo.new(:file, 1, :text).should be_true
