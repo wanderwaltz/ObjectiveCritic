@@ -45,6 +45,7 @@ module OCritic
 
     def process_IO(file_info, io)
       process_lines(file_info, io)
+      process_file_stats(file_info, io)
     end
 
 
@@ -65,13 +66,26 @@ module OCritic
       end
     end
 
+    def process_file_stats(file_info, io)
+      file_info.file_stats.each do |key, statistic|
+        statistic.process_file(file_info, io)
+      end
+    end
 
     def print_stats
       @file_info.each do |filename, info|
 
         puts filename
 
+        puts "LINE STATISTICS:"
+
         info.line_stats.each do |key, statistic|
+          puts "  #{statistic.class.pretty_name}: #{statistic.to_s}"
+        end
+
+        puts "FILE STATISTICS:"
+
+        info.file_stats.each do |key, statistic|
           puts "  #{statistic.class.pretty_name}: #{statistic.to_s}"
         end
 

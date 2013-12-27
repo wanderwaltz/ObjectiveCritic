@@ -11,3 +11,6 @@ require_relative 'OCritic/processor'
 require_relative 'OCritic/lines_count'
 require_relative 'OCritic/trailing_whitespace'
 require_relative 'OCritic/line_length'
+
+# file statistics
+require_relative 'OCritic/classes_count'
