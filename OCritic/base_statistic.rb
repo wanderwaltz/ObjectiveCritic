@@ -9,8 +9,15 @@
 module OCritic
 
   class BaseStatistic
+    def value
+    end
+
+    def to_s
+      value.to_s
+    end
+
     class << self
-      
+
       # return class name by default, override if needed
       def pretty_name
         self.name.split(':').last

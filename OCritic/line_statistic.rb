@@ -14,12 +14,6 @@ module OCritic
     def process_line(string)
     end
 
-    def value
-    end
-
-    def to_s
-      value.to_s
-    end
 
     @line_statistics = []
 
