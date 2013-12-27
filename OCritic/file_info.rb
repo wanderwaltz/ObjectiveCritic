@@ -6,37 +6,23 @@
 #  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 #--------------------------------------------------------------------------
 require_relative 'line_statistic'
+require_relative 'file_statistic'
 
 module OCritic
 
   class FileInfo
     attr_reader :filename
     attr_reader :line_stats
+    attr_reader :file_stats
     attr_reader :all_lines
 
     def initialize(filename)
       @filename   = filename.dup
-      @line_stats = make_line_stats
+      @line_stats = LineStatistic.create_instances
+      @file_stats = FileStatistic.create_instances
       @all_lines  = []
     end
 
-    private
-
-    def make_line_stats
-      stats = {}
-
-      LineStatistic.all_statistics.each do |klass|
-
-        unless stats[klass.symbol] == nil
-          raise "Conflicting line statistic access symbol :#{klass.symbol} for classes: "\
-                "#{klass.name} and #{stats[klass.symbol].class.name}!"
-        end
-
-        stats[klass.symbol] = klass.new
-      end
-
-      stats
-    end
   end
 
 end
