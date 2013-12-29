@@ -11,6 +11,9 @@ module OCritic
 
   module FileStats
     class ClassesCount < FileStatistic
+
+      attr_reader :class_names
+
       def self.pretty_name
         "Objectice-C classes count"
       end
@@ -19,7 +22,7 @@ module OCritic
         :classes_count
       end
 
-      def process_parser_result(result)
+      def process_parser_result(file_info, result)
         # Assuming the parser was of ClassesCountGrammarParser class
         @class_names = result.class_names
         @value       = @class_names.count

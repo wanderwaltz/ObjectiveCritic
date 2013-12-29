@@ -32,13 +32,13 @@ module OCritic
       parser = self.class.parser
 
       if result = parser.parse(string)
-        process_parser_result(result)
+        process_parser_result(file_info, result)
       else
         raise parser.failure_reason
       end
     end
 
-    def process_parser_result(result)
+    def process_parser_result(file_info, result)
       # to be overridden in subclasses
     end
 

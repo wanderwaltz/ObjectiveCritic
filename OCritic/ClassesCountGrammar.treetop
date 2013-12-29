@@ -15,13 +15,7 @@ module OCritic
       grammar ClassesCountGrammar
 
         rule text
-          (
-            anything class_interface anything {
-              def to_s
-                class_interface.name
-              end
-            }
-          )* {
+          (anything class_interface anything)* {
             def class_names
               elements.collect {|elem| elem.class_interface.name }
             end
@@ -35,16 +29,22 @@ module OCritic
         end
 
         rule class_interface
-          keyword_interface wsp class_name wsp? category_name? wsp? ":" 
-            wsp? superclass_name wsp? protocols_list? class_interface_anything keyword_end {
+          keyword_interface wsp class_name wsp? category_declaration? wsp? ":"
+            wsp? superclass_name wsp? protocols_list?
+              class_interface_anything
+          keyword_end {
             def name
               class_name.text_value
             end
           }
         end
 
+        rule category_declaration
+          "(" wsp? category_name wsp? ")"
+        end
+
         rule category_name
-          "(" wsp? identifier wsp? ")"
+          identifier
         end
 
         # Need a rule separate from 'anything' to avoid infinite recursion.
@@ -71,11 +71,11 @@ module OCritic
         end
 
         rule identifier
-          [a-zA-Z] [a-zA-Z0-9]*
+          [_a-zA-Z$] [_a-zA-Z0-9$]*
         end
 
         rule protocols_list
-          "<" wsp protocol_name ("," wsp protocol_name)* wsp ">"
+          "<" wsp? protocol_name ("," wsp? protocol_name)* wsp? ">"
         end
 
         rule protocol_name

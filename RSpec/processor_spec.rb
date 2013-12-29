@@ -48,7 +48,7 @@ describe OCritic::Processor do
     it 'should pass the file object to #process_IO' do
       processor = OCritic::Processor.new
       processor.should_receive(:process_IO).with(anything(), kind_of(File)).exactly(:once)
-      processor.process_file('EmptyClass_9Lines.h')
+      processor.process_file('examples_line_stats/EmptyClass_9Lines.h')
     end
 
 
@@ -56,16 +56,16 @@ describe OCritic::Processor do
       processor = OCritic::Processor.new
       processor.should_receive(:process_IO).with(kind_of(OCritic::FileInfo),
                                                  kind_of(File)).exactly(:once)
-      processor.process_file('EmptyClass_9Lines.h')
+      processor.process_file('examples_line_stats/EmptyClass_9Lines.h')
     end
 
 
     it 'should create the file info object with the corresponding file name' do
       processor = OCritic::Processor.new
       processor.stub(:process_IO) do |file_info, io|
-        file_info.filename.should be == 'EmptyClass_9Lines.h'
+        file_info.filename.should be == 'examples_line_stats/EmptyClass_9Lines.h'
       end
-      processor.process_file('EmptyClass_9Lines.h')
+      processor.process_file('examples_line_stats/EmptyClass_9Lines.h')
     end
   end
 
@@ -77,8 +77,9 @@ describe OCritic::Processor do
 
 
     describe '#process_IO' do
-      it 'should pass the IO object to #process_lines' do
+      it 'should pass the IO object to #process_lines and #process_file_stats' do
         @processor.should_receive(:process_lines).with(:info, :io).exactly(:once)
+        @processor.should_receive(:process_file_stats).with(:info, :io).exactly(:once)
         @processor.process_IO(:info, :io)
       end
     end
