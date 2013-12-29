@@ -29,22 +29,41 @@ module OCritic
         end
 
         rule class_interface
-          keyword_interface wsp class_name wsp? category_declaration? wsp? ":"
-            wsp? superclass_name wsp? protocols_list?
+          keyword_interface wsp class_name wsp? category_or_superclass wsp? protocols_list?
               class_interface_anything
           keyword_end {
             def name
-              class_name.text_value
+              class_name.text_value + category_or_superclass.name
             end
           }
         end
+
+
+        rule category_or_superclass
+          (category_declaration / superclass_declaration) {
+            def name
+              if respond_to? :category_name
+                "(#{category_name.text_value})"
+              else
+                ""
+              end
+            end
+          }
+        end
+
+
+        rule superclass_declaration
+          ":" wsp? superclass_name
+        end
+
 
         rule category_declaration
           "(" wsp? category_name wsp? ")"
         end
 
+
         rule category_name
-          identifier
+          identifier?
         end
 
         # Need a rule separate from 'anything' to avoid infinite recursion.
