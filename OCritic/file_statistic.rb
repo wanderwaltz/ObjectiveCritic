@@ -17,6 +17,8 @@ module OCritic
   class FileStatistic < BaseStatistic
     include StatisticRegistry
 
+    attr_reader :value
+
     @parser = nil
 
     # Processes the file as a single IO object
@@ -29,26 +31,26 @@ module OCritic
 
       parser = self.class.parser
 
-      if nodes = parser.parse(string)
-        puts "#{self.class.pretty_name} parsed '#{file_info.filename}' successfully"
-        puts nodes.to_s
+      if result = parser.parse(string)
+        process_parser_result(result)
       else
-        puts "#{self.class.pretty_name} failed to parse file '#{file_info.filename}'"
-        puts parser.failure_reason
-        puts parser.failure_line
-        puts parser.failure_column
+        raise parser.failure_reason
       end
+    end
+
+    def process_parser_result(result)
+      # to be overridden in subclasses
     end
 
     class << self
       def treetop_filename
-        "#{self.name.split(':').last}Parser"
+        "#{self.name.split(':').last}Grammar"
       end
 
       def parser
         if @parser == nil
           Treetop.load "#{File.dirname(__FILE__)}/#{treetop_filename}.treetop"
-          @parser = Object.const_get(treetop_filename+'Parser').new
+          @parser = OCritic::FileStats::Grammars.const_get(treetop_filename+'Parser').new
         end
 
         @parser

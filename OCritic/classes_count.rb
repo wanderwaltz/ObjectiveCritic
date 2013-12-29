@@ -18,6 +18,12 @@ module OCritic
       def self.symbol
         :classes_count
       end
+
+      def process_parser_result(result)
+        # Assuming the parser was of ClassesCountGrammarParser class
+        @class_names = result.class_names
+        @value       = @class_names.count
+      end
     end
 
   end
